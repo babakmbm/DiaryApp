@@ -1,5 +1,3 @@
-/* TMA03 Erehwon Diary Demonstration */
-
 // Execute in strict mode to prevent some common mistakes
 "use strict";
 
@@ -37,9 +35,6 @@ function createDemoItems() {
   key = "diary1536771000002";
   localStorage.setItem(key, item);
 
-  // Make a demo image item
-  data = window.DEMO_URL;
-  item = makeItem("image", data);
 
   // Store the item in local storage
   key = "diary1536771000003";
@@ -76,10 +71,6 @@ function addSection(key, element) {
   function deleteElement() {
     // Remove the section from the page
     sectionElement.parentNode.removeChild(sectionElement);
-
-    // TODO: Q1(c)(ii)
-    // Remove the item from local storage by key
-    // (local storage is in Block 3 Part 5)
     localStorage.removeItem(key);
   }
 
@@ -118,10 +109,6 @@ function addTextEntry(key, text, isNewEntry) {
   if (isNewEntry) {
     textareaElement.focus();
   }
-
-  
-  // TODO: Q1(c)(iii)
-  // change even listner
   textareaElement.addEventListener('change',updateText);
 
   // a function to update the text and save to local storage when 
@@ -202,25 +189,11 @@ function addEntryClick() {
 
 // Function to handle Add photo button click
 function addPhotoClick() {
-  // Add a new image entry, using the current timestamp to make a key
-  /*var key = "diary" + Date.now();
-  var url = window.DEMO_URL;
-  addImageEntry(key, url);
-  */
-  // TODO: Q1(c)(iv) Task 1 of 3
-  // Instead of adding a dummy image:
-  // ...trigger the click event of the hidden file input element
   document.getElementById('fileInput').click();
 }
 
 // Function to handle a new file being selected
 function processFile(event) {
-  // TODO: Q1(c)(iv) Task 2 of 3
-    // Complete this event listener to read the file when it is selected:
-    // (reading files into a data URL using FileReader is demonstrated in Block 3 Part 4)
-    // ...then rather than using the data URL as src for an Image element,
-    // ...use it to add a new image entry, using the current timestamp to make a key
-    //    (demonstrated elsewhere in this file)
   const input = document.querySelector('input[type="file"]');
   console.log(input.files)
   const reader = new FileReader()
@@ -229,13 +202,6 @@ function processFile(event) {
     var key = "diary" + Date.now();
     var thisUrl = reader.result;
     addImageEntry(key, thisUrl);
-    //
-    // TODO: Q1(c)(iv) Task 3 of 3
-    // In the same event listener, make an image item using the data URL
-    // (demonstrated elsewhere in this file)
-    // Store the item in local storage using the given key
-    // (demonstrated elsewhere in this file)
-
     var item = makeItem("image", thisUrl)
     localStorage.setItem(key, item);
   }
@@ -245,9 +211,7 @@ function processFile(event) {
 function initialize() {
   // A rough check for local storage support
   if (!window.localStorage) {
-    // This check is not 100% reliable, but is sufficient for our demo, see e.g.
-    // https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Testing_for_availability
-
+    
     // This could be more elegant too, but is sufficient for our demo
     document.querySelector("main").outerHTML =
       "<h1>Error: localStorage not supported!</h1>";
